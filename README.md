@@ -115,9 +115,13 @@ docker system info
 - 도커와 호스트간의 공유 폴더 생성
   + 이미지를 생설할때부터 공유 폴더 지정
     ```
-    docker run -i -t --name volume-container -v /data 컨테이너이름
+    docker run -i -t --name 컨테이너이름 -v /data 이미지이름
     ```
+      * 디렉토리를 설정해서 이미지를 생성할때부터 공유 폴더 지정
+        ```
+        docker run -it --name 컨테이너이름 -v 호스트 주소:컨테이너 주소 이미지이름
+        ```
   + 이미지를 생성한 이후에 공유 폴더 지정
     ```
-    
+
     ```
