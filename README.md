@@ -112,3 +112,12 @@ sudo docker version
 docker system info
 ```
 
+- 도커와 호스트간의 공유 폴더 생성
+  + 이미지를 생설할때부터 공유 폴더 지정
+    ```
+    docker run -i -t --name volume-container -v /data 컨테이너이름
+    ```
+  + 이미지를 생성한 이후에 공유 폴더 지정
+    ```
+    
+    ```
