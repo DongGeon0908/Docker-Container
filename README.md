@@ -122,6 +122,11 @@ sudo docker system info
 sudo docker images
 ```
 
+- 이미지 다운로드
+```
+sudo docker pull ubuntu:14.04
+```
+
 - 도커와 호스트간의 공유 폴더 생성
   + 이미지를 생설할때부터 공유 폴더 지정
     ```
@@ -138,4 +143,16 @@ docker restart 컨테이너_이름
 
 docker exec 컨테이너_이름 sh -c "도커 컨테이너에 보낼 명령문; 도커 컨테이너에 보낼 명령문"
 ```
-  + 
+
+- Docker Compose
+  + 기존에 Docker에 명령을 하기 위해서는 도커 커맨드라인 또는 쉘스크립트를 통해서 직접 명령을 수행했으나 docker compose를 사용하면 쉽개 docker를 운용할 수 있다.  
+
+- Docker Compose 설치하기
+```
+curl -L "https://github.com/docker/compose/releases/download/1.9.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+# test
+docker-compose version
+```
+
+- docker-compose.yml을 통해서 Docker에 명령을 줄수있다.
