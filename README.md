@@ -87,9 +87,14 @@ sudo docker stop se01
 sudo docker restart se01
 ```
 
-- 컨테이너 확인하기
+- 전체 컨테이너 확인하기
 ```
 sudo docker ps -a
+```
+
+- 실행중인 컨테이너 확인하기
+```
+sudo docker ps
 ```
 
 - 컨테이너 삭제하기
@@ -109,7 +114,12 @@ sudo docker version
 
 - 도커 실행환경 확인
 ```
-docker system info
+sudo docker system info
+```
+
+- 도커에 저장된 이미지 목록 확인
+```
+sudo docker images
 ```
 
 - 도커와 호스트간의 공유 폴더 생성
@@ -121,7 +131,11 @@ docker system info
         ```
         docker run -it --name 컨테이너이름 -v 호스트 주소:컨테이너 주소 이미지이름
         ```
-  + 이미지를 생성한 이후에 공유 폴더 지정
-    ```
 
-    ```
+- 쉘스크립트를 사용해서 docker에 명령 보내기
+```
+docker restart 컨테이너_이름
+
+docker exec 컨테이너_이름 sh -c "도커 컨테이너에 보낼 명령문; 도커 컨테이너에 보낼 명령문"
+```
+  + 
