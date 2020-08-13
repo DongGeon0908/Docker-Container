@@ -2,7 +2,7 @@
 docker와 컨테이너의 기본 개념 및 코드 정리!
 <hr/>
 
-![Alt text](picture/docker_log.png)
+![Alt text](picture/docker_logo.png)
 
 ### Docker란?
   0) Docker는 컨테이너를 활용하여 다수의 프로그램을 실핼할 수 있는 플랫폼이다. Docker라는 가상화 플랫폼 아래에 다수의 컨테이너가 존재한다. 이를 활용하여 여러개의 Container를 자유롭게 사용하여 수많은 기능을 쓸수있다.
