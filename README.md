@@ -36,108 +36,81 @@ docker와 컨테이너의 기본 개념 및 코드 정리!
             + 컨테이너를 생성하게 되면 해당 이미지에서 정의한 파일 시스템과 파일, 그리고 격리된 시스템 자원 및 네트워크를 사용할 수 있는 독립된 공간이 생성
 
 ###  Docker 설치 방법
-```
-1) sudo apt-get remove docker docker-engine docker.io containerd runc
-2) sudo apt-get update
-3) sudo apt-get install \ apt-transport-https \ ca-certificates \ curl \ gnupg-agent \ software-properties-common
-4) curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-5) sudo apt-key fingerprint 0EBFCD88
-6) sudo add-apt-repository \ "deb [arch=amd64] https://download.docker.com/linux/ubuntu \ $(lsb_release -cs) \ stable"
-7) sudo apt-get update
-8) sudo apt-get install docker-ce docker-ce-cli containerd.io
-9) apt-cache madison docker-ce
-10) sudo apt-get install docker-ce=<VERSION_STRING> docker-ce-cli=<VERSION_STRING> containerd.io
-11) sudo docker run hello-world
-```
+1) `sudo apt-get remove docker docker-engine docker.io containerd runc`
+2) `sudo apt-get update`
+3) `sudo apt-get install \ apt-transport-https \ ca-certificates \ curl \ gnupg-agent \ software-properties-common`
+4) `curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -`
+5) `sudo apt-key fingerprint 0EBFCD88`
+6) `sudo add-apt-repository \ "deb [arch=amd64] https://download.docker.com/linux/ubuntu \ $(lsb_release -cs) \ stable`
+7) `sudo apt-get update`
+8) `sudo apt-get install docker-ce docker-ce-cli containerd.io`
+9) `apt-cache madison docker-ce`
+10) `sudo apt-get install docker-ce=<VERSION_STRING> docker-ce-cli=<VERSION_STRING> containerd.io`
+11) `sudo docker run hello-world`
+
 - 도커 설치부터 실행까지!
     + 11번에 있는 hello-world는 ubuntu와 다른 이미지
 
 ### 도커 실행 명령문
 - 도커 컨테이너 추가하기 1
-```
-docker run -i -t --name se01 ubuntu /bin/bash
-```
+`docker run -i -t --name se01 ubuntu /bin/bash`
 - se라는 ubuntu 컨테이너가 생성됨!
 
 - 추가된 컨테이너에 접속하는 방법 
-```
-docker attach se01
-```
+`docker attach se01`
+
 - 컨테이너에 접속한 이후에 종료하기 위해서는 exit 타이핑!
     + attach로 접속한 컨테이너는 한번 exit로 나가면 다시 재접속할때 컨테이너를 재실행해야함
 
 - 도커 컨테이너 추가하기 2
-```
-docker run -i -t -d --name se01 ubuntu /bin/bash
-```
+`docker run -i -t -d --name se01 ubuntu /bin/bash`
+
 - se라는 ubuntu 컨테이너가 생성됨!
 
 - 추가된 컨테이너에 접속하는 방법 
-```
-docker attach se01
-```
+`docker attach se01`
+
 - 컨테이너에 접속한 이후에 종료하기 위해서는 exit 타이핑!
     + -d 옵션을 활용하여 exit를 통해서 외부로 나가도 백그라운드에서 계속 실행 상태를 유지
 
 - 컨테이너 중지하기
-```
-sudo docker stop se01
-```
+`sudo docker stop se01`
 
 - 컨테이너 재부팅하기
-```
-sudo docker restart se01
-```
+`sudo docker restart se01`
 
 - 전체 컨테이너 확인하기
-```
-sudo docker ps -a
-```
+`sudo docker ps -a`
 
 - 실행중인 컨테이너 확인하기
-```
-sudo docker ps
-```
+`sudo docker ps`
 
 - 컨테이너 삭제하기
-```
-sudo docker rm se01
-```
+`sudo docker rm se01`
 
 - 이미지 삭제하기
-```
-docker rmi ubuntu:latest
-```
+`docker rmi ubuntu:latest`
 
 - 도커 버전 확인
-```
-sudo docker version
-```
+`sudo docker version`
 
 - 도커 실행환경 확인
-```
-sudo docker system info
-```
+`sudo docker system info`
+
+- 도커 컨테이너 상세 정보
+`sudo docker inspect`
 
 - 도커에 저장된 이미지 목록 확인
-```
-sudo docker images
-```
+`sudo docker images`
 
 - 이미지 다운로드
-```
-sudo docker pull ubuntu:14.04
-```
+`sudo docker pull ubuntu:14.04`
 
 - 도커와 호스트간의 공유 폴더 생성
   + 이미지를 생설할때부터 공유 폴더 지정
-    ```
-    docker run -i -t --name 컨테이너이름 -v /data 이미지이름
-    ```
+    `docker run -i -t --name 컨테이너이름 -v /data 이미지이름`
       * 디렉토리를 설정해서 이미지를 생성할때부터 공유 폴더 지정
-        ```
-        docker run -it --name 컨테이너이름 -v 호스트 주소:컨테이너 주소 이미지이름
-        ```
+        `docker run -it --name 컨테이너이름 -v 호스트 주소:컨테이너 주소 이미지이름`
 
 - 쉘스크립트를 사용해서 docker에 명령 보내기
 ```
