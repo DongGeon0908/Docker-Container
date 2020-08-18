@@ -29,6 +29,7 @@ docker와 컨테이너의 기본 개념 및 코드 정리!
         + Docker에서 사용하는 컨테이너는 리눅스 자체기능을 이용해서 프로세스 단위의 격리된 환경 구현 -> 성능 손실 거의 없음
 
   4) 도커의 구조
+      ![Alt text](picture/docker_engine.png)
       - 도커를 설치하고 실행하면 DOCKERD라는 데몬 프로그램이 서버로서 실행
       - REST API, CLI 등의 도구들이 클라이언트가 되어서 도커 데몬에게 작업을 지시
 
@@ -115,6 +116,21 @@ docker와 컨테이너의 기본 개념 및 코드 정리!
 - 도커 컨테이너 상세 정보
 `sudo docker inspect`
 
+- 컨테이너가 실행되면서 변경된 파일 목록 
+`sudo docker diff 컨테이너이름`
+
+- 컨테이너와 컨테이너 연결
+  1) A컨테이너와 B컨테이너 준비
+  2) `sudo docker run --name B_Container -d B
+  3) `sudo docker run --name A_Container -d -p 80:80 --link B_Container:B_container A`
+
+- 이미지와 컨테이너의 세부 정보
+`sudo docker inspect 컨테이너이름 or 이미지 이름`
+
+- 이미지의 히스토리 정보
+`docker history se01:0.1`
+  + `docker history <이미지 이름>:<태그>`
+
 - 도커에 저장된 이미지 목록 확인
 `sudo docker images`
 
@@ -127,18 +143,60 @@ docker와 컨테이너의 기본 개념 및 코드 정리!
       * 디렉토리를 설정해서 이미지를 생성할때부터 공유 폴더 지정
         `docker run -it --name 컨테이너이름 -v 호스트 주소:컨테이너 주소 이미지이름`
 
-- 쉘스크립트를 사용해서 docker에 명령 보내기
+- 쉘스크립트를 사용해서 docker_container에 명령 보내기
 ```
 docker restart 컨테이너_이름
 
 docker exec 컨테이너_이름 sh -c "도커 컨테이너에 보낼 명령문; 도커 컨테이너에 보낼 명령문"
 ```
+
+- container에서 파일 꺼내기
+```
+docker cp <컨테이너 이름>:<경로> <호스트 경로>
+
+sudo docker cp se01:/data ./
+```
+
 <hr />
 
 ### Docker Image
 - 자신이 수정한 Image를 추출하는 방법
 `docker commit -a "커밋내용" container_id image_name/tag
-<hr />
+
+- 나만의 Docker Image 생성
+  1) `vi Dockerfile`
+  2) `Dockerfile` 수정
+  ```
+  FROM ubuntu:14.0.4
+  MAINTAINER wrjs <wrjs@naver.com>
+
+  RUN apt-get update
+  RUN apt-get install gcc
+
+  VOLUME ["/data", "/share/c"]
+
+  WORKDIR /share
+
+  CMD ["gcc -o hello hello.c"]
+
+  EXPOSE 80
+  EXPOSE 443
+  ```
+    + `FROM`: 어떤 이미지를 기반으로 할지 설정합니다. Docker 이미지는 기존에 만들어진 이미지를 기반으로 생성합니다. <이미지 이름>:<태그> 형식으로 설정
+    + `MAINTAINER`: 이미지 작성자 정보
+    + `RUN`: 쉘 스크립트 혹은 명령을 실행
+      * 이미지 생성 중에는 사용자 입력을 받을 수 없으므로 `apt-get install` 명령에서 `-y` 옵션을 사용(`yum install`도 동일).
+      * 나머지는 nginx 설정
+    + `VOLUME`: 호스트와 공유할 디렉터리 목록 `docker run` 명령에서 `-v` 옵션으로 설정 예) 호스트의 `/share` 디렉터리를 Docker 컨테이너의 `/data` 디렉터리에 연결
+    + `CMD`: 컨테이너가 시작되었을 때 실행할 실행 파일 또는 스크립트
+    + `WORKDIR`: CMD에서 설정한 실행 파일이 실행될 디렉터리
+    + `EXPOSE`: 호스트와 연결할 포트 번호
+  3) `Dockerfile` 빌드하기
+    + `sudo docker build --tag hello:0.1 .`
+    + `docker build <옵션> <Dockerfile 경로>`
+    + 옵션
+      * `--tag`를 이용하여 이미지 이름과 태그를 설정
+</hr>
 
 ### Docker Compose
 ![Alt text](picture/docker_Compose.png)
