@@ -142,6 +142,13 @@ docker와 컨테이너의 기본 개념 및 코드 정리!
     `docker run -i -t --name 컨테이너이름 -v /data 이미지이름`
       * 디렉토리를 설정해서 이미지를 생성할때부터 공유 폴더 지정
         `docker run -it --name 컨테이너이름 -v 호스트 주소:컨테이너 주소 이미지이름`
+  + ex)
+```
+    docker run -it --name se01 -v /usr/local/apache/share:/data ubuntu
+    docker run -it --name se02 -v /usr/local/apache/share:/data ubuntu
+    docker run -it --name se03 -v /usr/local/apache/share:/data ubuntu
+```
+  
 
 - 쉘스크립트를 사용해서 docker_container에 명령 보내기
 ```
